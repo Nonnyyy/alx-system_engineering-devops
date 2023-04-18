@@ -1,7 +1,4 @@
 #
-# rules.input-after
-#
-# Rules that should be run after the ufw command line added rules. Custom
 # rules should be added to one of these chains:
 #   ufw-after-input
 #   ufw-after-output
@@ -27,4 +24,9 @@
 -A ufw-after-input -m addrtype --dst-type BROADCAST -j ufw-skip-to-policy-input
 
 # don't delete the 'COMMIT' line or these rules won't be processed
+COMMIT
+# nat Table rules
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
 COMMIT
